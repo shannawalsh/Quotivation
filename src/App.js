@@ -6,12 +6,15 @@ import { Loader } from "react-feather";
 import "./App.css";
 import FavoriteQuotes from "./components/quotes/FavoriteQuotes";
 import FavoriteQuoteCard from "./components/quotes/FavoriteQuoteCard";
+import Message from "./components/Message";
 
 function App() {
   const [quotes, setQuotes] = useState([]);
   const [loading, setLoading] = useState(false); 
   const [category, setCategory] = useState("All");
   const [favoriteQuotes, setfavoriteQuotes] = useState([]); 
+  const [messageText, setMessageText] = useState("");
+  const [showMessage, setShowMessage] = useState(false);
   
  const maxFaves = 3;
 
@@ -44,7 +47,7 @@ function App() {
 
   const filteredQuotes = category !== "All" ? quotes.filter((quote) => quote.categories.includes(category)) : quotes;
 
-  const addToFavorites = (quoteId) => {
+  const addToFavorites = (quoteId, Message) => {
     const selectedQuote = quotes.find((quote) => quote.id === quoteId);
     //console.log(selectedQuote);
 
@@ -52,8 +55,12 @@ function App() {
     
       if (alreadyFavorite) {
         console.log("This quote is already in your favorite! Choose another.")
+        setMessageText("This quote is already in your favorite! Choose another.");
+        setShowMessage(true);
       } else if (favoriteQuotes.length < maxFaves) {
         console.log("Added to favorites!");
+        setMessageText("Added to favorites!");
+        setShowMessage(true);
         setfavoriteQuotes([...favoriteQuotes, selectedQuote]);
       } else {
         console.log("Max reached.")
@@ -65,8 +72,13 @@ function App() {
       setfavoriteQuotes(updatedFavorites);
     };
 
+    const removeMessage = () => {
+      setShowMessage(false);
+    };
+
   return (
     <div className='App'>
+      {showMessage && <Message messageText={messageText} removeMessage={removeMessage} />}
       <Header />
       <main>
         <FavoriteQuotes favoriteQuotes={favoriteQuotes} maxFaves={maxFaves} removeFromFavorites={removeFromFavorites}/>
