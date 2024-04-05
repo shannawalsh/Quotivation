@@ -5,7 +5,6 @@ import Quotes from "./components/quotes/Quotes"
 import { Loader } from "react-feather";
 import "./App.css";
 import FavoriteQuotes from "./components/quotes/FavoriteQuotes";
-import FavoriteQuoteCard from "./components/quotes/FavoriteQuoteCard";
 import Message from "./components/Message";
 
 function App() {
