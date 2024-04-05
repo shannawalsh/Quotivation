@@ -12,7 +12,7 @@ function App() {
   const [quotes, setQuotes] = useState([]);
   const [loading, setLoading] = useState(false); 
   const [category, setCategory] = useState("All");
-  const [favoriteQuotes, setfavoriteQuotes] = useState([]); 
+  const [favoriteQuotes, setfavoriteQuotes] = useState(JSON.parse(window.localStorage.getItem("favoriteQuotes")) || []); 
   const [messageText, setMessageText] = useState("");
   const [showMessage, setShowMessage] = useState(false);
   
@@ -40,6 +40,10 @@ function App() {
   useEffect(() => {
     fetchQuotes();
   }, []);
+
+  useEffect(() => {
+    window.localStorage.setItem("favoriteQuotes", JSON.stringify(favoriteQuotes));
+    }, [favoriteQuotes]);
   
   const handleCategoryChange = (e) => {
     setCategory(e.target.value)
@@ -63,7 +67,8 @@ function App() {
         setShowMessage(true);
         setfavoriteQuotes([...favoriteQuotes, selectedQuote]);
       } else {
-        console.log("Max reached.")
+        setMessageText("You have reached your max.")
+        setShowMessage(true);
       }
      };  
     
@@ -76,6 +81,7 @@ function App() {
       setShowMessage(false);
     };
 
+   
   return (
     <div className='App'>
       {showMessage && <Message messageText={messageText} removeMessage={removeMessage} />}
