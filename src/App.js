@@ -53,16 +53,14 @@ function App() {
 
   const addToFavorites = (quoteId, Message) => {
     const selectedQuote = quotes.find((quote) => quote.id === quoteId);
-    //console.log(selectedQuote);
+  
 
     const alreadyFavorite = favoriteQuotes.find((favorite) => favorite.id === selectedQuote.id);
     
       if (alreadyFavorite) {
-        console.log("This quote is already in your favorite! Choose another.")
         setMessageText("This quote is already in your favorite! Choose another.");
         setShowMessage(true);
       } else if (favoriteQuotes.length < maxFaves) {
-        console.log("Added to favorites!");
         setMessageText("Added to favorites!");
         setShowMessage(true);
         setfavoriteQuotes([...favoriteQuotes, selectedQuote]);
